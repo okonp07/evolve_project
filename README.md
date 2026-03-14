@@ -6,12 +6,63 @@
 
 Streamlit application for recommending vacation-rental minimum stay rules using historical booking behavior, temporal demand patterns, event uplift, lead time, and price context.
 
+## Live App
+
+### [Open the deployed Streamlit app](https://evolveproject-7ji95fds7ffsc5kzq9xmsz.streamlit.app)
+
+If the app has just been updated, give Streamlit a minute to finish rebuilding before refreshing the page.
+
+## Current Project Status
+
+- The Streamlit app is live and deployable from `main`
+- The recommendation flow is backed by a working `src/` package
+- Zero-price / inactive properties are excluded from the property selector
+- The repository includes tests and a small CLI analysis script for verification
+
 ## What This App Does
 
 - Recommends a minimum stay of `1-7` nights for a selected property and date.
 - Scores demand on a `0-100` scale using a hybrid heuristic.
 - Shows confidence, supporting reasons, and practical strategy tips.
 - Includes an analytics dashboard for booking trends, property comparisons, and temporal patterns.
+- Restricts recommendations to properties with active pricing history.
+
+## How To Use The App
+
+### On The Live App
+
+1. Open the live app link above.
+2. Go to `Get Recommendation`.
+3. Select a property from the dropdown.
+4. Choose a target stay date.
+5. Optionally mark whether there is a local event or holiday.
+6. Adjust nightly price and lead time if needed.
+7. Click `Get Recommendation`.
+
+The app returns:
+
+- a recommended minimum stay
+- a demand score out of `100`
+- a confidence score
+- a demand tier (`Low`, `Medium`, or `High`)
+- reasoning and strategy tips
+
+### In The Analytics Dashboard
+
+Use `Analytics Dashboard` to review:
+
+- overall booking-rate trends over time
+- event vs non-event performance
+- top-performing properties
+- day-of-week and month-level demand patterns
+
+### About The Inputs
+
+- `Property`: only active, priced properties are shown
+- `Target stay date`: the date you want to evaluate
+- `Nightly price`: defaults to the selected property's historical average price
+- `Lead time`: days between today/booking date and check-in
+- `Local event / holiday`: adds event uplift to the demand score
 
 ## Methodology
 
@@ -61,6 +112,8 @@ streamlit run app.py
 ```
 
 The app expects the dataset at `data/minstay_experiment.csv`.
+
+Then open `http://localhost:8501` in your browser.
 
 ## Testing
 
