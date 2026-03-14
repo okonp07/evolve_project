@@ -19,6 +19,10 @@
   <strong><a href="https://evolveproject-7ji95fds7ffsc5kzq9xmsz.streamlit.app">Launch the live app</a></strong>
 </p>
 
+<p align="center">
+  <a href="https://evolveproject-7ji95fds7ffsc5kzq9xmsz.streamlit.app"><img src="https://img.shields.io/badge/Open%20The%20Streamlit%20App-Click%20Here-ff4b4b?style=for-the-badge&logo=streamlit&logoColor=white" alt="Open the Streamlit app"></a>
+</p>
+
 ## Live App
 
 ### [Open the deployed Streamlit app](https://evolveproject-7ji95fds7ffsc5kzq9xmsz.streamlit.app)
