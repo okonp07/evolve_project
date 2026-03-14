@@ -1,0 +1,1 @@
+"""Minimum stay recommender package."""

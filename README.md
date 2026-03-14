@@ -1,93 +1,82 @@
-# Property DS Case Study
-
-<h1 align="center">Property DS Case Study</h1>
+# Evolve Dynamic Minimum Stay Recommender
 
 <p align="center">
-  <img src="evolve-banner.png" alt="Evolve" width="600"/>
+  <img src="evolve-banner.png" alt="Evolve" width="700"/>
 </p>
 
-## Welcome
+Streamlit application for recommending vacation-rental minimum stay rules using historical booking behavior, temporal demand patterns, event uplift, lead time, and price context.
 
-Thank you for investing your time and considering a role with **Evolve**.  
-This case study is designed to simulate a real-world scenario we do at Evolve around **Dynamic Minimum Stays**.
+## What This App Does
 
-We want to see how you approach ambiguous problems, structure analysis, and communicate insights.
+- Recommends a minimum stay of `1-7` nights for a selected property and date.
+- Scores demand on a `0-100` scale using a hybrid heuristic.
+- Shows confidence, supporting reasons, and practical strategy tips.
+- Includes an analytics dashboard for booking trends, property comparisons, and temporal patterns.
 
----
+## Methodology
 
-## Process
+The recommendation score follows the weighting described in the product spec:
 
-1. We'll align with you on the role and expectations before sending this repo.  
-2. You’ll work asynchronously for up to **1 week** (usually 4–6 hours of focused work is sufficient).  
-3. You’ll then walk us through your code & findings in a **60‑minute session**:  
-   - **10 minutes**: Candidate-led walkthrough of your analysis and solution.  
-   - **50 minutes**: Discussion with our data science team about assumptions, design decisions, and extensions.  
+- Property performance: `40%`
+- Temporal patterns: `30%`
+- Event impact: `15%`
+- Lead time: `10%`
+- Price competitiveness: `5%`
 
-This is the only technical/coding round.
+Demand scores map to policy tiers:
 
----
+- `High (>= 70)`: stricter minimum stays
+- `Medium (40-69)`: balanced restrictions
+- `Low (< 40)`: lower minimums to improve occupancy
 
-## Case Study Overview
-
-Evolve helps homeowners maximize rental performance.  
-One lever is **minimum stay requirements** (e.g., 2 nights vs. 5 nights). Setting this dynamically based on demand can improve both occupancy and revenue.
-
-**Your task:** Explore the provided dataset and propose a simple framework for **dynamic minimum stays**.
-
----
-
-## Data
-
-A synthetic dataset is provided here:
-
-```
-data/minstay_experiment.csv
-```
-
-Columns include:
-- `property_id`: Unique property identifier  
-- `date`: Calendar date  
-- `booked`: 1 if booked, 0 otherwise  
-- `price`: Daily rate (USD)  
-- `lead_time`: Days between booking date and stay date  
-- `event`: Whether there is a local event/holiday (1/0)  
-
----
 ## Repository Structure
 
-```
+```text
 .
+├── app.py
 ├── requirements.txt
-├── README.md
-├── evolve-banner.png
-├── data
+├── .streamlit/config.toml
+├── src/
+│   ├── data_processor.py
+│   └── recommendation_engine.py
+├── tests/
+│   └── test_recommender.py
+├── scripts/
+│   └── run_analysis.py
+├── data/
 │   └── minstay_experiment.csv
-├── notebooks
+├── notebooks/
 │   ├── eda.ipynb
 │   └── analysis.ipynb
-├── scripts
-│   └── run_analysis.py
-
-
+└── README_2.md
 ```
-## Deliverables
 
-- A notebook (`notebooks/analysis.ipynb`) or Python script exploring the dataset.  
-- Some **EDA** (exploratory data analysis) around demand patterns.  
-- A simple prototype or heuristic for recommending **minimum stays**.  
-- A short write‑up of assumptions, limitations, and possible extensions.  
+## Local Setup
 
----
+```bash
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+streamlit run app.py
+```
 
-## Evaluation
+The app expects the dataset at `data/minstay_experiment.csv`.
 
-We will evaluate on:  
-- **Analytical reasoning** (how you approach the problem)  
-- **Clarity** (how results are presented)  
-- **Simplicity vs. depth** (balance of rigor and pragmatism)  
-- **Communication** (how you explain trade‑offs)  
+## Testing
 
----
+```bash
+pytest tests/ -v
+python scripts/run_analysis.py
+```
 
-Good luck, and thank you again for your time!  
-We’re excited to see your work.
+## Deployment
+
+This repo is ready for Streamlit Cloud deployment with `app.py` as the entry point.
+
+1. Push the repository to GitHub.
+2. Open Streamlit Cloud.
+3. Create a new app from the repo.
+4. Set the main file path to `app.py`.
+5. Deploy.
+
+See [DEPLOYMENT.md](DEPLOYMENT.md) for a short deployment checklist.
