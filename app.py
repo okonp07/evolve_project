@@ -39,50 +39,198 @@ def inject_styles() -> None:
             font-family: 'Manrope', sans-serif;
         }}
 
+        [data-testid="stAppViewContainer"] {{
+            background:
+                radial-gradient(circle at top left, rgba(135, 206, 235, 0.20), transparent 28%),
+                radial-gradient(circle at top right, rgba(107, 127, 63, 0.18), transparent 24%),
+                linear-gradient(180deg, #fcfdfb 0%, #f4f7f2 48%, #eef4f8 100%);
+        }}
+
+        [data-testid="stAppViewContainer"] .main .block-container {{
+            padding-top: 1.6rem;
+            padding-bottom: 3rem;
+            max-width: 1180px;
+        }}
+
+        [data-testid="stSidebar"] {{
+            background:
+                linear-gradient(180deg, rgba(107, 127, 63, 0.12) 0%, rgba(255, 255, 255, 0.96) 30%),
+                #ffffff;
+            border-right: 1px solid rgba(107, 127, 63, 0.14);
+        }}
+
+        [data-testid="stSidebar"] .stRadio > div {{
+            gap: 0.45rem;
+        }}
+
+        [data-testid="stSidebar"] label p {{
+            font-weight: 700;
+            color: {BRAND["dark"]};
+        }}
+
+        [data-testid="stMetric"] {{
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(107, 127, 63, 0.12);
+            border-radius: 18px;
+            padding: 0.85rem 1rem;
+            box-shadow: 0 12px 28px rgba(52, 58, 64, 0.05);
+        }}
+
+        [data-testid="stMetricLabel"] p {{
+            font-weight: 700;
+            color: {BRAND["grey"]};
+        }}
+
         .main-title {{
-            font-size: 2.7rem;
+            font-size: 3rem;
             font-weight: 800;
             color: {BRAND["olive"]};
-            margin-bottom: 0.3rem;
+            margin-bottom: 0.35rem;
+            letter-spacing: -0.04em;
         }}
 
         .sub-title {{
             color: {BRAND["grey"]};
-            font-size: 1.05rem;
-            margin-bottom: 1.5rem;
+            font-size: 1.08rem;
+            margin-bottom: 1.35rem;
+            max-width: 720px;
         }}
 
-        .hero-card {{
+        .eyebrow {{
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            margin-bottom: 0.8rem;
+            border-radius: 999px;
+            background: rgba(107, 127, 63, 0.10);
+            color: {BRAND["olive"]};
+            font-size: 0.82rem;
+            font-weight: 800;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }}
+
+        .hero-shell {{
+            position: relative;
+            overflow: hidden;
             padding: 1.5rem;
-            border-radius: 16px;
-            background: linear-gradient(135deg, {BRAND["light"]} 0%, #ffffff 100%);
-            border: 1px solid rgba(107, 127, 63, 0.18);
-            box-shadow: 0 10px 30px rgba(52, 58, 64, 0.06);
+            border-radius: 28px;
+            background:
+                radial-gradient(circle at top right, rgba(135, 206, 235, 0.26), transparent 28%),
+                linear-gradient(135deg, rgba(255, 255, 255, 0.96) 0%, rgba(248, 249, 250, 0.98) 100%);
+            border: 1px solid rgba(107, 127, 63, 0.16);
+            box-shadow: 0 18px 40px rgba(52, 58, 64, 0.07);
+            margin-bottom: 1.25rem;
         }}
 
         .result-card {{
-            padding: 1.5rem;
-            border-radius: 18px;
-            background: linear-gradient(135deg, rgba(107, 127, 63, 0.10) 0%, rgba(135, 206, 235, 0.12) 100%);
-            border: 2px solid rgba(107, 127, 63, 0.28);
+            padding: 1.6rem;
+            border-radius: 24px;
+            background:
+                radial-gradient(circle at top right, rgba(255,255,255,0.65), transparent 26%),
+                linear-gradient(135deg, rgba(107, 127, 63, 0.12) 0%, rgba(135, 206, 235, 0.18) 100%);
+            border: 1px solid rgba(107, 127, 63, 0.22);
             margin-top: 1rem;
+            box-shadow: 0 16px 34px rgba(52, 58, 64, 0.08);
+        }}
+
+        .hero-card {{
+            padding: 1.2rem;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.78);
+            border: 1px solid rgba(107, 127, 63, 0.12);
+            box-shadow: inset 0 1px 0 rgba(255,255,255,0.6);
+        }}
+
+        .hero-kicker {{
+            color: {BRAND["grey"]};
+            font-size: 0.95rem;
+            margin-bottom: 0.25rem;
+        }}
+
+        .hero-value {{
+            font-size: 2.1rem;
+            font-weight: 800;
+            color: {BRAND["dark"]};
+            line-height: 1;
+        }}
+
+        .hero-caption {{
+            margin-top: 0.4rem;
+            color: {BRAND["grey"]};
+            font-size: 0.92rem;
         }}
 
         .metric-chip {{
             display: inline-block;
-            padding: 0.35rem 0.7rem;
+            padding: 0.45rem 0.8rem;
             margin: 0.2rem 0.2rem 0 0;
             border-radius: 999px;
-            background: {BRAND["light"]};
-            border: 1px solid rgba(107, 127, 63, 0.18);
+            background: rgba(255, 255, 255, 0.92);
+            border: 1px solid rgba(107, 127, 63, 0.14);
             color: {BRAND["dark"]};
             font-size: 0.9rem;
-            font-weight: 600;
+            font-weight: 700;
         }}
 
         .reason-list {{
             margin: 0.5rem 0 0 0;
             padding-left: 1.2rem;
+        }}
+
+        .section-card {{
+            padding: 1.2rem 1.3rem;
+            border-radius: 22px;
+            background: rgba(255,255,255,0.82);
+            border: 1px solid rgba(107, 127, 63, 0.12);
+            box-shadow: 0 12px 28px rgba(52,58,64,0.05);
+            margin-bottom: 1rem;
+        }}
+
+        .section-title {{
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: {BRAND["olive"]};
+            margin-bottom: 0.25rem;
+        }}
+
+        .section-copy {{
+            color: {BRAND["grey"]};
+            margin-bottom: 0;
+        }}
+
+        .info-grid {{
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0.9rem;
+            margin: 1rem 0 1.2rem 0;
+        }}
+
+        .info-box {{
+            padding: 1rem;
+            border-radius: 18px;
+            background: rgba(255,255,255,0.82);
+            border: 1px solid rgba(107, 127, 63, 0.10);
+        }}
+
+        .info-box strong {{
+            display: block;
+            color: {BRAND["dark"]};
+            margin-bottom: 0.25rem;
+        }}
+
+        .info-box span {{
+            color: {BRAND["grey"]};
+            font-size: 0.92rem;
+        }}
+
+        @media (max-width: 900px) {{
+            .main-title {{
+                font-size: 2.35rem;
+            }}
+
+            .info-grid {{
+                grid-template-columns: 1fr;
+            }}
         }}
         </style>
         """,
@@ -122,6 +270,7 @@ def metric_row(processor: DataProcessor) -> None:
 
 
 def show_home(recommender: MinStayRecommender, processor: DataProcessor) -> None:
+    st.markdown("<div class='eyebrow'>Revenue Optimization</div>", unsafe_allow_html=True)
     st.markdown("<div class='main-title'>Dynamic Minimum Stay Recommender</div>", unsafe_allow_html=True)
     st.markdown(
         "<div class='sub-title'>Property-level minimum stay recommendations grounded in historical booking behavior, seasonality, events, lead time, and pricing context.</div>",
@@ -129,7 +278,37 @@ def show_home(recommender: MinStayRecommender, processor: DataProcessor) -> None
     )
     metric_row(processor)
 
-    st.markdown("<div class='hero-card'>", unsafe_allow_html=True)
+    market_rate = recommender.market_booking_rate()
+    st.markdown(
+        f"""
+        <div class='hero-shell'>
+          <div class='info-grid'>
+            <div class='hero-card'>
+              <div class='hero-kicker'>Portfolio coverage</div>
+              <div class='hero-value'>{len(recommender.available_properties())}</div>
+              <div class='hero-caption'>Active, priced properties available for recommendations</div>
+            </div>
+            <div class='hero-card'>
+              <div class='hero-kicker'>Market booking rate</div>
+              <div class='hero-value'>{market_rate:.1%}</div>
+              <div class='hero-caption'>Portfolio-wide baseline used in the demand score</div>
+            </div>
+            <div class='hero-card'>
+              <div class='hero-kicker'>Decision mode</div>
+              <div class='hero-value'>Hybrid</div>
+              <div class='hero-caption'>Business heuristics blended with historical demand patterns</div>
+            </div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown("<div class='section-card'>", unsafe_allow_html=True)
+    st.markdown(
+        "<div class='section-title'>Build A Recommendation</div><p class='section-copy'>Choose a property, target date, and booking context to generate a practical minimum-stay policy.</p>",
+        unsafe_allow_html=True,
+    )
     left, right = st.columns([1.2, 1])
     properties = recommender.available_properties()
     default_property = properties[0]
@@ -222,7 +401,12 @@ def show_home(recommender: MinStayRecommender, processor: DataProcessor) -> None
 
 
 def show_analytics(recommender: MinStayRecommender, processor: DataProcessor) -> None:
-    st.header("Analytics Dashboard")
+    st.markdown("<div class='eyebrow'>Portfolio Analytics</div>", unsafe_allow_html=True)
+    st.markdown("<div class='main-title'>Analytics Dashboard</div>", unsafe_allow_html=True)
+    st.markdown(
+        "<div class='sub-title'>Explore how booking behavior changes across time, events, and individual properties.</div>",
+        unsafe_allow_html=True,
+    )
     tabs = st.tabs(["Overall Trends", "Property Analysis", "Temporal Patterns"])
     data = processor.main_df
 
@@ -366,10 +550,22 @@ def show_analytics(recommender: MinStayRecommender, processor: DataProcessor) ->
 
 
 def show_about(processor: DataProcessor, recommender: MinStayRecommender) -> None:
-    st.header("About This Application")
-    st.write(
-        "This Streamlit app turns historical booking data into practical minimum-stay guidance for property managers."
+    st.markdown("<div class='eyebrow'>Methodology</div>", unsafe_allow_html=True)
+    st.markdown("<div class='main-title'>About This Application</div>", unsafe_allow_html=True)
+    st.markdown(
+        "<div class='sub-title'>This app translates historical booking signals into clear, operational minimum-stay guidance for property managers.</div>",
+        unsafe_allow_html=True,
     )
+    st.markdown(
+        """
+        <div class='section-card'>
+          <div class='section-title'>What the system is optimizing for</div>
+          <p class='section-copy'>The goal is to tighten minimum stays when demand is strong and relax them when occupancy is harder to win.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
     st.markdown(
         """
         ### Methodology
@@ -396,15 +592,31 @@ def show_about(processor: DataProcessor, recommender: MinStayRecommender) -> Non
 
     st.subheader("Data Summary")
     summary = processor.get_summary_statistics()
-    st.json(
-        {
-            "date_range": [summary["date_range"][0].date().isoformat(), summary["date_range"][1].date().isoformat()],
-            "properties": summary["unique_properties"],
-            "records": summary["total_records"],
-            "overall_booking_rate": round(summary["overall_booking_rate"], 4),
-            "average_price": round(summary["average_price"], 2),
-        }
-    )
+    col1, col2 = st.columns([1.1, 0.9])
+    with col1:
+        st.markdown(
+            f"""
+            <div class='section-card'>
+              <div class='section-title'>Dataset Snapshot</div>
+              <div class='info-grid'>
+                <div class='info-box'><strong>{summary["unique_properties"]:,}</strong><span>properties</span></div>
+                <div class='info-box'><strong>{summary["total_records"]:,}</strong><span>rows</span></div>
+                <div class='info-box'><strong>{summary["overall_booking_rate"]:.1%}</strong><span>booking rate</span></div>
+              </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+    with col2:
+        st.json(
+            {
+                "date_range": [summary["date_range"][0].date().isoformat(), summary["date_range"][1].date().isoformat()],
+                "properties": summary["unique_properties"],
+                "records": summary["total_records"],
+                "overall_booking_rate": round(summary["overall_booking_rate"], 4),
+                "average_price": round(summary["average_price"], 2),
+            }
+        )
 
     st.subheader("Scoring Weights")
     weights = recommender.weights
