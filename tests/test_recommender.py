@@ -79,3 +79,14 @@ def test_high_demand_case_recommends_longer_stay() -> None:
 
     assert high["recommended_min_stay"] >= low["recommended_min_stay"]
     assert high["demand_score"] >= low["demand_score"]
+
+
+def test_zero_price_properties_are_excluded() -> None:
+    df = make_sample_df()
+    df.loc[df["property_id"] == 1002, "price"] = 0
+
+    processor = DataProcessor(df)
+    recommender = MinStayRecommender(processor.process())
+    recommender.train()
+
+    assert 1002 not in recommender.available_properties()

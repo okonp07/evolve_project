@@ -28,12 +28,15 @@ class MinStayRecommender:
         self.event_stats = self.processed_data["event_stats"]
         self.lead_time_stats = self.processed_data["lead_time_stats"]
         self._market_booking_rate = float(self.main_df["booked"].mean())
+        self._active_property_ids = sorted(
+            self.property_stats.loc[self.property_stats["price_mean"] > 0].index.tolist()
+        )
 
         self._property_percentiles = self.property_stats["booked_mean"].rank(pct=True)
         self._price_percentiles = self.property_stats["price_mean"].rank(pct=True)
 
     def available_properties(self) -> list[int]:
-        return sorted(self.property_stats.index.tolist())
+        return self._active_property_ids
 
     def min_date(self) -> pd.Timestamp:
         return pd.Timestamp(self.main_df["date"].min())
@@ -48,6 +51,7 @@ class MinStayRecommender:
         return self._market_booking_rate
 
     def property_context(self, property_id: int) -> dict[str, float]:
+        self._ensure_active_property(property_id)
         row = self.property_stats.loc[property_id]
         return {
             "booking_rate": float(row["booked_mean"]),
@@ -64,6 +68,7 @@ class MinStayRecommender:
         lead_time: int,
         event: bool,
     ) -> dict[str, object]:
+        self._ensure_active_property(property_id)
         target_date = pd.Timestamp(target_date)
         property_row = self.property_stats.loc[property_id]
         month_name = target_date.month_name()
@@ -112,6 +117,12 @@ class MinStayRecommender:
             "strategy_tips": strategy_tips,
             "factor_scores": factor_scores,
         }
+
+    def _ensure_active_property(self, property_id: int) -> None:
+        if property_id not in self._active_property_ids:
+            raise ValueError(
+                f"Property {property_id} is not available for recommendations because it has no active pricing history."
+            )
 
     def _property_score(self, property_id: int) -> float:
         percentile = float(self._property_percentiles.loc[property_id])
