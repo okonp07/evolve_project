@@ -109,7 +109,7 @@ def initialize_engine() -> tuple[MinStayRecommender, DataProcessor]:
 def show_banner() -> None:
     banner_path = Path("evolve-banner.png")
     if banner_path.exists():
-        st.image(str(banner_path), use_container_width=True)
+        st.image(str(banner_path), use_column_width=True)
 
 
 def metric_row(processor: DataProcessor) -> None:
