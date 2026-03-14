@@ -4,13 +4,40 @@
   <img src="evolve-banner.png" alt="Evolve" width="700"/>
 </p>
 
-Streamlit application for recommending vacation-rental minimum stay rules using historical booking behavior, temporal demand patterns, event uplift, lead time, and price context.
+<p align="center">
+  <a href="https://evolveproject-7ji95fds7ffsc5kzq9xmsz.streamlit.app"><img src="https://img.shields.io/badge/Live%20App-Streamlit-red?style=for-the-badge&logo=streamlit" alt="Live App"></a>
+  <img src="https://img.shields.io/badge/Python-3.11-blue?style=for-the-badge&logo=python" alt="Python 3.11">
+  <img src="https://img.shields.io/badge/Tests-4%20passing-brightgreen?style=for-the-badge" alt="Tests Passing">
+  <img src="https://img.shields.io/badge/Status-Deployed-success?style=for-the-badge" alt="Status Deployed">
+</p>
+
+<p align="center">
+  Streamlit application for recommending vacation-rental minimum stay rules using historical booking behavior, temporal demand patterns, event uplift, lead time, and price context.
+</p>
+
+<p align="center">
+  <strong><a href="https://evolveproject-7ji95fds7ffsc5kzq9xmsz.streamlit.app">Launch the live app</a></strong>
+</p>
 
 ## Live App
 
 ### [Open the deployed Streamlit app](https://evolveproject-7ji95fds7ffsc5kzq9xmsz.streamlit.app)
 
 If the app has just been updated, give Streamlit a minute to finish rebuilding before refreshing the page.
+
+## App Preview
+
+<p align="center">
+  <a href="https://evolveproject-7ji95fds7ffsc5kzq9xmsz.streamlit.app">
+    <img src="evolve-banner.png" alt="Evolve app preview banner" width="700"/>
+  </a>
+</p>
+
+The app has three primary sections:
+
+- `Get Recommendation` for a property-level minimum-stay recommendation
+- `Analytics Dashboard` for booking and demand exploration
+- `About` for methodology, scoring weights, and project context
 
 ## Current Project Status
 
@@ -46,6 +73,12 @@ The app returns:
 - a confidence score
 - a demand tier (`Low`, `Medium`, or `High`)
 - reasoning and strategy tips
+
+### Quick Start
+
+```text
+Pick a property -> choose a date -> adjust price and lead time -> click Get Recommendation
+```
 
 ### In The Analytics Dashboard
 
