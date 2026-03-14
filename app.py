@@ -131,11 +131,27 @@ def show_home(recommender: MinStayRecommender, processor: DataProcessor) -> None
 
     st.markdown("<div class='hero-card'>", unsafe_allow_html=True)
     left, right = st.columns([1.2, 1])
+    properties = recommender.available_properties()
+    default_property = properties[0]
+
+    if "selected_property" not in st.session_state or st.session_state["selected_property"] not in properties:
+        st.session_state["selected_property"] = default_property
+
+    def sync_property_defaults() -> None:
+        property_context = recommender.property_context(st.session_state["selected_property"])
+        st.session_state["nightly_price"] = float(round(property_context["price_mean"], 2))
+
+    if "nightly_price" not in st.session_state:
+        sync_property_defaults()
 
     with left:
-        properties = recommender.available_properties()
-        default_property = properties[0]
-        property_id = st.selectbox("Property", properties, index=0)
+        property_id = st.selectbox(
+            "Property",
+            properties,
+            index=properties.index(st.session_state["selected_property"]),
+            key="selected_property",
+            on_change=sync_property_defaults,
+        )
         date_value = st.date_input(
             "Target stay date",
             value=recommender.default_target_date(),
@@ -145,11 +161,11 @@ def show_home(recommender: MinStayRecommender, processor: DataProcessor) -> None
         event_flag = st.checkbox("Local event / holiday", value=False)
 
     with right:
-        property_context = recommender.property_context(default_property if property_id is None else property_id)
+        property_context = recommender.property_context(property_id)
         nightly_price = st.number_input(
             "Nightly price (USD)",
             min_value=0.0,
-            value=float(round(property_context["price_mean"], 2)),
+            key="nightly_price",
             step=5.0,
         )
         lead_time = st.slider("Lead time (days until check-in)", min_value=0, max_value=180, value=21)
