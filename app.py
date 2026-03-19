@@ -12,6 +12,7 @@ from src.recommendation_engine import MinStayRecommender
 
 
 DATA_PATH = Path("data/minstay_experiment.csv")
+AUTHOR_IMAGE_PATH = Path("assets/okon_prince.png")
 BRAND = {
     "olive": "#6B7F3F",
     "sky": "#87CEEB",
@@ -221,6 +222,62 @@ def inject_styles() -> None:
         .info-box span {{
             color: {BRAND["grey"]};
             font-size: 0.92rem;
+        }}
+
+        .author-card {{
+            padding: 1.35rem;
+            border-radius: 24px;
+            background: linear-gradient(180deg, rgba(255,255,255,0.94) 0%, rgba(246,249,247,0.96) 100%);
+            border: 1px solid rgba(107, 127, 63, 0.14);
+            box-shadow: 0 16px 34px rgba(52,58,64,0.06);
+        }}
+
+        .author-name {{
+            font-size: 2rem;
+            font-weight: 800;
+            color: {BRAND["dark"]};
+            margin-bottom: 0.3rem;
+            letter-spacing: -0.03em;
+        }}
+
+        .author-role {{
+            color: {BRAND["olive"]};
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }}
+
+        .author-copy {{
+            color: {BRAND["dark"]};
+            font-size: 1rem;
+            line-height: 1.7;
+            margin-bottom: 0.9rem;
+        }}
+
+        .stack-chip {{
+            display: inline-block;
+            padding: 0.42rem 0.78rem;
+            margin: 0.18rem 0.22rem 0 0;
+            border-radius: 999px;
+            background: rgba(107, 127, 63, 0.08);
+            border: 1px solid rgba(107, 127, 63, 0.12);
+            color: {BRAND["dark"]};
+            font-size: 0.88rem;
+            font-weight: 700;
+        }}
+
+        .footer-block {{
+            margin-top: 2.6rem;
+            padding: 1.35rem 1rem 0.4rem 1rem;
+            border-top: 1px solid rgba(107, 127, 63, 0.16);
+            text-align: center;
+            color: {BRAND["grey"]};
+            font-size: 0.92rem;
+            line-height: 1.8;
+        }}
+
+        .footer-block strong {{
+            color: {BRAND["dark"]};
         }}
 
         @media (max-width: 900px) {{
@@ -568,25 +625,72 @@ def show_about(processor: DataProcessor, recommender: MinStayRecommender) -> Non
 
     st.markdown(
         """
-        ### Methodology
-        The recommender uses a hybrid scoring system that mirrors the product README:
-
-        - Property performance contributes **40%** of the score.
-        - Temporal patterns contribute **30%**.
-        - Event impact contributes **15%**.
-        - Lead time contributes **10%**.
-        - Price competitiveness contributes **5%**.
-
-        The final demand score is translated into low, medium, or high demand, then mapped to a minimum-stay policy.
+        <div class='section-card'>
+          <div class='section-title'>Project Overview</div>
+          <p class='author-copy'>
+            This application is an interactive decision-support tool for dynamic minimum-stay recommendations.
+            Rather than applying one static minimum-stay rule to every property and every date, the solution evaluates
+            demand context and recommends when a property should be more flexible and when it should hold firmer restrictions.
+          </p>
+          <p class='author-copy'>
+            The app is designed to be useful for real operational decisions. Users select a property, choose a target
+            date, indicate whether there is an event or holiday, and adjust booking context such as price and lead time.
+            The app then returns a recommended minimum stay, a demand score, a confidence score, and clear written reasoning.
+          </p>
+        </div>
         """
+        ,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        """
+        <div class='section-card'>
+          <div class='section-title'>How The Solution Works</div>
+          <p class='author-copy'>
+            The solution uses a hybrid framework that combines business heuristics with statistical summaries from the
+            historical dataset. The data pipeline first validates and cleans the source data, then engineers temporal
+            features such as day of week, month, seasonality, weekend behavior, and lead-time buckets.
+          </p>
+          <p class='author-copy'>
+            The recommendation engine then computes five interpretable components: property performance, temporal demand
+            patterns, event uplift, lead-time behavior, and price competitiveness. Those components are combined into a
+            single demand score between 0 and 100. The score is finally mapped to a demand tier and a recommended
+            minimum-stay policy.
+          </p>
+          <p class='author-copy'>
+            Because the system is explainable by design, the final recommendation is accompanied by reasoning, strategic
+            tips, and supporting portfolio context so the user understands both the output and the logic behind it.
+          </p>
+        </div>
+        """
+        ,
+        unsafe_allow_html=True,
+    )
+
+    st.markdown(
+        """
+        <div class='section-card'>
+          <div class='section-title'>Decision Logic At A Glance</div>
+          <div class='info-grid'>
+            <div class='info-box'><strong>40%</strong><span>Property performance and historical booking strength</span></div>
+            <div class='info-box'><strong>30%</strong><span>Temporal demand patterns across weekdays, weekends, and seasonality</span></div>
+            <div class='info-box'><strong>15%</strong><span>Event and holiday uplift</span></div>
+            <div class='info-box'><strong>10%</strong><span>Lead-time behavior and booking-window dynamics</span></div>
+            <div class='info-box'><strong>5%</strong><span>Price competitiveness versus the property's normal level</span></div>
+            <div class='info-box'><strong>Output</strong><span>Demand tier, confidence, narrative explanation, and minimum-stay policy</span></div>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
     )
 
     st.subheader("Decision Rules")
     st.write(
         """
         - High demand (`>= 70`): set stricter minimum stays to capture premium demand.
-        - Medium demand (`40-69`): balance occupancy with revenue using moderate minimum stays.
-        - Low demand (`< 40`): reduce restrictions to fill nights and improve occupancy.
+        - Medium demand (`40-69`): balance occupancy and revenue with moderate restrictions.
+        - Low demand (`< 40`): reduce restrictions to improve occupancy and fill weaker dates.
         """
     )
 
@@ -628,6 +732,52 @@ def show_about(processor: DataProcessor, recommender: MinStayRecommender) -> Non
         hide_index=True,
     )
 
+    st.subheader("About The Author")
+    col1, col2 = st.columns([0.85, 1.55], gap="large")
+    with col1:
+        if AUTHOR_IMAGE_PATH.exists():
+            st.image(str(AUTHOR_IMAGE_PATH), use_column_width=True)
+    with col2:
+        st.markdown(
+            """
+            <div class='author-card'>
+              <div class='author-name'>Okon Prince</div>
+              <div class='author-role'>Senior Data Scientist at MIVA Open University | AI Engineer &amp; Data Scientist</div>
+              <p class='author-copy'>I design and deploy end-to-end data systems that turn raw data into production-ready intelligence.</p>
+              <p class='author-copy'>My core stack includes Python, Streamlit, BigQuery, Supabase, Hugging Face, PySpark, SQL, Machine Learning, LLMs, and Transformers.</p>
+              <p class='author-copy'>My work spans risk scoring systems, A/B testing, AI-powered dashboards, RAG pipelines, predictive analytics, and LLM-based solutions and AI research.</p>
+              <p class='author-copy'>Currently, I work as a Senior Data Scientist at MIVA Open University, building intelligent systems that drive analytics, decision support, and scalable AI innovation.</p>
+              <p class='author-copy'><strong>I believe:</strong> models are trained, systems are engineered, impact is delivered.</p>
+              <div>
+                <span class='stack-chip'>Python</span>
+                <span class='stack-chip'>Streamlit</span>
+                <span class='stack-chip'>BigQuery</span>
+                <span class='stack-chip'>Supabase</span>
+                <span class='stack-chip'>Hugging Face</span>
+                <span class='stack-chip'>PySpark</span>
+                <span class='stack-chip'>SQL</span>
+                <span class='stack-chip'>Machine Learning</span>
+                <span class='stack-chip'>LLMs</span>
+                <span class='stack-chip'>Transformers</span>
+              </div>
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+
+def render_footer() -> None:
+    st.markdown(
+        """
+        <div class='footer-block'>
+          <div><strong>© Okon Prince, 2026</strong></div>
+          <div>This project is based on the data.org Financial Health Prediction Zindi challenge.</div>
+          <div>Enquiries: okonp07@gmail.com, +234(0)9020000299</div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
 
 def main() -> None:
     inject_styles()
@@ -640,15 +790,17 @@ def main() -> None:
 
     page = st.sidebar.radio(
         "Navigate",
-        ["🎯 Get Recommendation", "📊 Analytics Dashboard", "ℹ️ About"],
+        ["Get Recommendation", "Analytics Dashboard", "About"],
     )
 
-    if page == "🎯 Get Recommendation":
+    if page == "Get Recommendation":
         show_home(recommender, processor)
-    elif page == "📊 Analytics Dashboard":
+    elif page == "Analytics Dashboard":
         show_analytics(recommender, processor)
     else:
         show_about(processor, recommender)
+
+    render_footer()
 
 
 if __name__ == "__main__":
