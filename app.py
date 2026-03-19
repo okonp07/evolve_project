@@ -232,6 +232,20 @@ def inject_styles() -> None:
             box-shadow: 0 16px 34px rgba(52,58,64,0.06);
         }}
 
+        .author-image-wrap {{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100%;
+        }}
+
+        .author-heading {{
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: {BRAND["olive"]};
+            margin-bottom: 0.85rem;
+        }}
+
         .author-name {{
             font-size: 2rem;
             font-weight: 800;
@@ -608,16 +622,16 @@ def show_analytics(recommender: MinStayRecommender, processor: DataProcessor) ->
 
 def show_about(processor: DataProcessor, recommender: MinStayRecommender) -> None:
     st.markdown("<div class='eyebrow'>Methodology</div>", unsafe_allow_html=True)
-    st.markdown("<div class='main-title'>About This Application</div>", unsafe_allow_html=True)
+    st.markdown("<div class='main-title'>About</div>", unsafe_allow_html=True)
     st.markdown(
-        "<div class='sub-title'>This app translates historical booking signals into clear, operational minimum-stay guidance for property managers.</div>",
+        "<div class='sub-title'>This page explains the project clearly, the logic behind the solution, and the author behind the work.</div>",
         unsafe_allow_html=True,
     )
     st.markdown(
         """
         <div class='section-card'>
-          <div class='section-title'>What the system is optimizing for</div>
-          <p class='section-copy'>The goal is to tighten minimum stays when demand is strong and relax them when occupancy is harder to win.</p>
+          <div class='section-title'>What This Project Is About</div>
+          <p class='section-copy'>This project is an interactive decision-support application built to recommend dynamic minimum stays for vacation rental properties. Instead of relying on a single static rule for every property and every date, the app evaluates each booking scenario in context and recommends a minimum-stay policy that better matches expected demand.</p>
         </div>
         """,
         unsafe_allow_html=True,
@@ -628,14 +642,15 @@ def show_about(processor: DataProcessor, recommender: MinStayRecommender) -> Non
         <div class='section-card'>
           <div class='section-title'>Project Overview</div>
           <p class='author-copy'>
-            This application is an interactive decision-support tool for dynamic minimum-stay recommendations.
-            Rather than applying one static minimum-stay rule to every property and every date, the solution evaluates
-            demand context and recommends when a property should be more flexible and when it should hold firmer restrictions.
+            The core business problem behind the app is simple: minimum-stay requirements should not be fixed all the time.
+            On strong demand dates, longer minimum stays can protect revenue and reduce operational turnover. On weaker dates,
+            shorter minimum stays can improve occupancy and help fill inventory that might otherwise go unused.
           </p>
           <p class='author-copy'>
-            The app is designed to be useful for real operational decisions. Users select a property, choose a target
-            date, indicate whether there is an event or holiday, and adjust booking context such as price and lead time.
-            The app then returns a recommended minimum stay, a demand score, a confidence score, and clear written reasoning.
+            This application turns that idea into a practical workflow. A user selects a property, chooses a target stay date,
+            specifies whether a local event is happening, and adjusts the booking context with nightly price and lead time.
+            The system then produces a recommendation that includes the suggested minimum stay, a demand score, a confidence
+            score, and a clear explanation of the reasoning behind the result.
           </p>
         </div>
         """
@@ -648,19 +663,25 @@ def show_about(processor: DataProcessor, recommender: MinStayRecommender) -> Non
         <div class='section-card'>
           <div class='section-title'>How The Solution Works</div>
           <p class='author-copy'>
-            The solution uses a hybrid framework that combines business heuristics with statistical summaries from the
-            historical dataset. The data pipeline first validates and cleans the source data, then engineers temporal
-            features such as day of week, month, seasonality, weekend behavior, and lead-time buckets.
+            The solution uses a hybrid, interpretable framework. The pipeline begins by validating and cleaning the raw booking
+            data. It then engineers time-aware features such as day of week, month, seasonality, weekend behavior, and
+            lead-time buckets so that the demand context for each property-date combination can be described in a meaningful way.
           </p>
           <p class='author-copy'>
-            The recommendation engine then computes five interpretable components: property performance, temporal demand
-            patterns, event uplift, lead-time behavior, and price competitiveness. Those components are combined into a
-            single demand score between 0 and 100. The score is finally mapped to a demand tier and a recommended
-            minimum-stay policy.
+            Once the data is prepared, the recommendation engine calculates five interpretable components: property performance,
+            temporal demand patterns, event uplift, lead-time behavior, and price competitiveness. These components are combined
+            into a weighted demand score from 0 to 100. That score is then translated into a demand tier and, finally, into a
+            recommended minimum-stay policy.
           </p>
           <p class='author-copy'>
-            Because the system is explainable by design, the final recommendation is accompanied by reasoning, strategic
-            tips, and supporting portfolio context so the user understands both the output and the logic behind it.
+            The design is intentionally explainable. This means the app does not just output a number. It also explains why the
+            recommendation was made, what parts of the demand profile influenced it, and how a property manager can interpret
+            that recommendation operationally.
+          </p>
+          <p class='author-copy'>
+            In practice, the app works as both an analytics product and a decision-support tool. It helps users understand the
+            relationship between booking behavior and demand while also giving them a simple, operationally useful recommendation
+            they can apply immediately.
           </p>
         </div>
         """
@@ -688,9 +709,9 @@ def show_about(processor: DataProcessor, recommender: MinStayRecommender) -> Non
     st.subheader("Decision Rules")
     st.write(
         """
-        - High demand (`>= 70`): set stricter minimum stays to capture premium demand.
-        - Medium demand (`40-69`): balance occupancy and revenue with moderate restrictions.
-        - Low demand (`< 40`): reduce restrictions to improve occupancy and fill weaker dates.
+        - High demand (`>= 70`): set stricter minimum stays to capture premium demand and protect higher-value booking windows.
+        - Medium demand (`40-69`): balance occupancy and revenue with moderate restrictions and flexible decision-making.
+        - Low demand (`< 40`): reduce restrictions to improve occupancy, fill weaker dates, and remove unnecessary friction.
         """
     )
 
@@ -732,15 +753,19 @@ def show_about(processor: DataProcessor, recommender: MinStayRecommender) -> Non
         hide_index=True,
     )
 
-    st.subheader("About The Author")
-    col1, col2 = st.columns([0.85, 1.55], gap="large")
+    col1, col2 = st.columns([0.92, 1.45], gap="large")
     with col1:
         if AUTHOR_IMAGE_PATH.exists():
-            st.image(str(AUTHOR_IMAGE_PATH), use_column_width=True)
+            st.markdown("<div class='author-image-wrap'>", unsafe_allow_html=True)
+            inner_left, inner_center, inner_right = st.columns([0.08, 0.84, 0.08])
+            with inner_center:
+                st.image(str(AUTHOR_IMAGE_PATH), use_column_width=True)
+            st.markdown("</div>", unsafe_allow_html=True)
     with col2:
         st.markdown(
             """
             <div class='author-card'>
+              <div class='author-heading'>About The Author</div>
               <div class='author-name'>Okon Prince</div>
               <div class='author-role'>Senior Data Scientist at MIVA Open University | AI Engineer &amp; Data Scientist</div>
               <p class='author-copy'>I design and deploy end-to-end data systems that turn raw data into production-ready intelligence.</p>
@@ -772,7 +797,7 @@ def render_footer() -> None:
         <div class='footer-block'>
           <div><strong>© Okon Prince, 2026</strong></div>
           <div>This project is based on the data.org Financial Health Prediction Zindi challenge.</div>
-          <div>Enquiries: okonp07@gmail.com, +234(0)9020000299</div>
+          <div>enquiries; okonp07@gmail.com, +234(0)9020000299</div>
         </div>
         """,
         unsafe_allow_html=True,
